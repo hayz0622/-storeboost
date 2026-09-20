@@ -24,14 +24,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Build StoreBoost site
+      - name: Rebuild exact StoreBoost final site
         run: |
           rm -rf _site
           mkdir -p _site
-          cat .deploy/part*.b64 | base64 --decode > /tmp/storeboost-base.zip
-          unzip -q /tmp/storeboost-base.zip -d _site
-          cat .deploy/overlay00.b64 .deploy/overlay01.b64 .deploy/overlay02a.b64 .deploy/overlay02b1.b64 .deploy/overlay02b2.b64 .deploy/overlay03.b64 .deploy/overlay04.b64 | base64 --decode > /tmp/storeboost-overlay.zip
-          unzip -qo /tmp/storeboost-overlay.zip -d _site
+          cat             .deploy/sync00a.b64 .deploy/sync00b.b64 .deploy/sync00c.b64 .deploy/sync00d.b64             .deploy/sync01a.b64 .deploy/sync01b.b64 .deploy/sync01c.b64 .deploy/sync01d.b64             .deploy/final02.b64 .deploy/final03.b64 .deploy/final04.b64             .deploy/sync05a.b64 .deploy/sync05b.b64 .deploy/sync05c.b64 .deploy/sync05d.b64             .deploy/sync06a.b64 .deploy/sync06b.b64 .deploy/sync06c.b64 .deploy/sync06d.b64             | base64 --decode > /tmp/storeboost-final.zip
+          echo "91256753e2069a49fe43e89b0b7dec8e9d9c954f4686cea66892cb2f2095b300  /tmp/storeboost-final.zip" | sha256sum -c -
+          unzip -t /tmp/storeboost-final.zip
+          unzip -q /tmp/storeboost-final.zip -d _site
+          test -f _site/index.html
+          test -f _site/assets/logo.webp
+          test -f _site/product-audit-checklist.html
+          test -f _site/product-launch-qa.html
+          test -f _site/product-cro-toolkit.html
+          test -f _site/product-bundle.html
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
