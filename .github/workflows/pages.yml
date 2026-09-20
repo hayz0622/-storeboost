@@ -1,3 +1,4 @@
+# StoreBoost GitHub Pages deployment
 name: Deploy StoreBoost to GitHub Pages
 
 on:
