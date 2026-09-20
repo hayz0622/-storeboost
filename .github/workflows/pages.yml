@@ -1,4 +1,3 @@
-# StoreBoost GitHub Pages deployment
 name: Deploy StoreBoost to GitHub Pages
 
 on:
@@ -25,19 +24,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Extract StoreBoost site
-        run: |
-          rm -rf _site
-          mkdir _site
-          unzip -q storeboost-deploy.zip -d _site
-
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
       - name: Upload static site
         uses: actions/upload-pages-artifact@v4
         with:
-          path: _site
+          path: .
 
       - name: Deploy to GitHub Pages
         id: deployment
